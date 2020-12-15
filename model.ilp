@@ -1,0 +1,99 @@
+\ Model _copy
+\ LP format - for model browsing. Use MPS format to capture full model detail.
+Maximize
+ 
+Subject To
+ c0[1]: pod_matrix[1,0] + pod_matrix[1,1] + pod_matrix[1,2]
+   + pod_matrix[1,3] + pod_matrix[1,4] = 1
+ c0[2]: pod_matrix[2,0] + pod_matrix[2,1] + pod_matrix[2,2]
+   + pod_matrix[2,3] + pod_matrix[2,4] = 1
+ c0[3]: pod_matrix[3,0] + pod_matrix[3,1] + pod_matrix[3,2]
+   + pod_matrix[3,3] + pod_matrix[3,4] = 1
+ c0[4]: pod_matrix[4,0] + pod_matrix[4,1] + pod_matrix[4,2]
+   + pod_matrix[4,3] + pod_matrix[4,4] = 1
+ c0[5]: pod_matrix[5,0] + pod_matrix[5,1] + pod_matrix[5,2]
+   + pod_matrix[5,3] + pod_matrix[5,4] = 1
+ c0[6]: pod_matrix[6,0] + pod_matrix[6,1] + pod_matrix[6,2]
+   + pod_matrix[6,3] + pod_matrix[6,4] = 1
+ c0[7]: pod_matrix[7,0] + pod_matrix[7,1] + pod_matrix[7,2]
+   + pod_matrix[7,3] + pod_matrix[7,4] = 1
+ c0[8]: pod_matrix[8,0] + pod_matrix[8,1] + pod_matrix[8,2]
+   + pod_matrix[8,3] + pod_matrix[8,4] = 1
+ c0[9]: pod_matrix[9,0] + pod_matrix[9,1] + pod_matrix[9,2]
+   + pod_matrix[9,3] + pod_matrix[9,4] = 1
+ c0[10]: pod_matrix[10,0] + pod_matrix[10,1] + pod_matrix[10,2]
+   + pod_matrix[10,3] + pod_matrix[10,4] = 1
+ c0[11]: pod_matrix[11,0] + pod_matrix[11,1] + pod_matrix[11,2]
+   + pod_matrix[11,3] + pod_matrix[11,4] = 1
+ c0[13]: pod_matrix[13,0] + pod_matrix[13,1] + pod_matrix[13,2]
+   + pod_matrix[13,3] + pod_matrix[13,4] = 1
+ c0[15]: pod_matrix[15,0] + pod_matrix[15,1] + pod_matrix[15,2]
+   + pod_matrix[15,3] + pod_matrix[15,4] = 1
+ c0[16]: pod_matrix[16,0] + pod_matrix[16,1] + pod_matrix[16,2]
+   + pod_matrix[16,3] + pod_matrix[16,4] = 1
+ c0[17]: pod_matrix[17,0] + pod_matrix[17,1] + pod_matrix[17,2]
+   + pod_matrix[17,3] + pod_matrix[17,4] = 1
+ c1[0,0]: pod_matrix[0,0] + 3 pod_matrix[1,0] + 4 pod_matrix[2,0]
+   + 5 pod_matrix[3,0] + 2 pod_matrix[4,0] + 5 pod_matrix[5,0]
+   + 3 pod_matrix[6,0] + 2 pod_matrix[7,0] + 5 pod_matrix[8,0]
+   + 2 pod_matrix[9,0] + 2 pod_matrix[10,0] + 4 pod_matrix[11,0]
+   + 5 pod_matrix[12,0] + 4 pod_matrix[13,0] + pod_matrix[14,0]
+   + pod_matrix[15,0] + 5 pod_matrix[16,0] + 4 pod_matrix[17,0]
+   + 2 pod_matrix[18,0] + pod_matrix[19,0] - 10 node[0] <= 0
+ c1[0,1]: pod_matrix[0,1] + 3 pod_matrix[1,1] + 4 pod_matrix[2,1]
+   + 5 pod_matrix[3,1] + 2 pod_matrix[4,1] + 5 pod_matrix[5,1]
+   + 3 pod_matrix[6,1] + 2 pod_matrix[7,1] + 5 pod_matrix[8,1]
+   + 2 pod_matrix[9,1] + 2 pod_matrix[10,1] + 4 pod_matrix[11,1]
+   + 5 pod_matrix[12,1] + 4 pod_matrix[13,1] + pod_matrix[14,1]
+   + pod_matrix[15,1] + 5 pod_matrix[16,1] + 4 pod_matrix[17,1]
+   + 2 pod_matrix[18,1] + pod_matrix[19,1] - 10 node[1] <= 0
+ c1[0,2]: pod_matrix[0,2] + 3 pod_matrix[1,2] + 4 pod_matrix[2,2]
+   + 5 pod_matrix[3,2] + 2 pod_matrix[4,2] + 5 pod_matrix[5,2]
+   + 3 pod_matrix[6,2] + 2 pod_matrix[7,2] + 5 pod_matrix[8,2]
+   + 2 pod_matrix[9,2] + 2 pod_matrix[10,2] + 4 pod_matrix[11,2]
+   + 5 pod_matrix[12,2] + 4 pod_matrix[13,2] + pod_matrix[14,2]
+   + pod_matrix[15,2] + 5 pod_matrix[16,2] + 4 pod_matrix[17,2]
+   + 2 pod_matrix[18,2] + pod_matrix[19,2] - 10 node[2] <= 0
+ c1[0,3]: pod_matrix[0,3] + 3 pod_matrix[1,3] + 4 pod_matrix[2,3]
+   + 5 pod_matrix[3,3] + 2 pod_matrix[4,3] + 5 pod_matrix[5,3]
+   + 3 pod_matrix[6,3] + 2 pod_matrix[7,3] + 5 pod_matrix[8,3]
+   + 2 pod_matrix[9,3] + 2 pod_matrix[10,3] + 4 pod_matrix[11,3]
+   + 5 pod_matrix[12,3] + 4 pod_matrix[13,3] + pod_matrix[14,3]
+   + pod_matrix[15,3] + 5 pod_matrix[16,3] + 4 pod_matrix[17,3]
+   + 2 pod_matrix[18,3] + pod_matrix[19,3] - 10 node[3] <= 0
+ c1[0,4]: pod_matrix[0,4] + 3 pod_matrix[1,4] + 4 pod_matrix[2,4]
+   + 5 pod_matrix[3,4] + 2 pod_matrix[4,4] + 5 pod_matrix[5,4]
+   + 3 pod_matrix[6,4] + 2 pod_matrix[7,4] + 5 pod_matrix[8,4]
+   + 2 pod_matrix[9,4] + 2 pod_matrix[10,4] + 4 pod_matrix[11,4]
+   + 5 pod_matrix[12,4] + 4 pod_matrix[13,4] + pod_matrix[14,4]
+   + pod_matrix[15,4] + 5 pod_matrix[16,4] + 4 pod_matrix[17,4]
+   + 2 pod_matrix[18,4] + pod_matrix[19,4] - 10 node[4] <= 0
+Bounds
+Binaries
+ pod_matrix[0,0] pod_matrix[0,1] pod_matrix[0,2] pod_matrix[0,3]
+ pod_matrix[0,4] pod_matrix[1,0] pod_matrix[1,1] pod_matrix[1,2]
+ pod_matrix[1,3] pod_matrix[1,4] pod_matrix[2,0] pod_matrix[2,1]
+ pod_matrix[2,2] pod_matrix[2,3] pod_matrix[2,4] pod_matrix[3,0]
+ pod_matrix[3,1] pod_matrix[3,2] pod_matrix[3,3] pod_matrix[3,4]
+ pod_matrix[4,0] pod_matrix[4,1] pod_matrix[4,2] pod_matrix[4,3]
+ pod_matrix[4,4] pod_matrix[5,0] pod_matrix[5,1] pod_matrix[5,2]
+ pod_matrix[5,3] pod_matrix[5,4] pod_matrix[6,0] pod_matrix[6,1]
+ pod_matrix[6,2] pod_matrix[6,3] pod_matrix[6,4] pod_matrix[7,0]
+ pod_matrix[7,1] pod_matrix[7,2] pod_matrix[7,3] pod_matrix[7,4]
+ pod_matrix[8,0] pod_matrix[8,1] pod_matrix[8,2] pod_matrix[8,3]
+ pod_matrix[8,4] pod_matrix[9,0] pod_matrix[9,1] pod_matrix[9,2]
+ pod_matrix[9,3] pod_matrix[9,4] pod_matrix[10,0] pod_matrix[10,1]
+ pod_matrix[10,2] pod_matrix[10,3] pod_matrix[10,4] pod_matrix[11,0]
+ pod_matrix[11,1] pod_matrix[11,2] pod_matrix[11,3] pod_matrix[11,4]
+ pod_matrix[12,0] pod_matrix[12,1] pod_matrix[12,2] pod_matrix[12,3]
+ pod_matrix[12,4] pod_matrix[13,0] pod_matrix[13,1] pod_matrix[13,2]
+ pod_matrix[13,3] pod_matrix[13,4] pod_matrix[14,0] pod_matrix[14,1]
+ pod_matrix[14,2] pod_matrix[14,3] pod_matrix[14,4] pod_matrix[15,0]
+ pod_matrix[15,1] pod_matrix[15,2] pod_matrix[15,3] pod_matrix[15,4]
+ pod_matrix[16,0] pod_matrix[16,1] pod_matrix[16,2] pod_matrix[16,3]
+ pod_matrix[16,4] pod_matrix[17,0] pod_matrix[17,1] pod_matrix[17,2]
+ pod_matrix[17,3] pod_matrix[17,4] pod_matrix[18,0] pod_matrix[18,1]
+ pod_matrix[18,2] pod_matrix[18,3] pod_matrix[18,4] pod_matrix[19,0]
+ pod_matrix[19,1] pod_matrix[19,2] pod_matrix[19,3] pod_matrix[19,4]
+ node[0] node[1] node[2] node[3] node[4]
+End

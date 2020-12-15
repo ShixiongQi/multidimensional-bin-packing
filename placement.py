@@ -19,17 +19,18 @@ try:
 
     # Create variables
     w = model.addVars(n, l, vtype=GRB.BINARY, name='pod_matrix')
-    y = model.addVars(l, vtype=GRB.BINARY, name='node')
+    y = model.addVars(l, vtype=GRB.BINARY, name='node_usage')
 
     # Set objective
     model.setObjective(quicksum(quicksum(w[i, k] for i in range(n)) for k in range(l)), GRB.MAXIMIZE)
 
     # Add constraint: pack each Pod in exactly one node
-    model.addConstrs(quicksum(w[i, j] for j in range(l)) == 1 for i in range(n))
+    model.addConstrs((quicksum(w[i, j] for j in range(l)) <= 1 for i in range(n)), "c0")
 
     # Add constraint: node capacity constraints
-    model.addConstrs(quicksum((a[j][i] * w[i, k]) for i in range(n)) <= c[j][k] * y[k] for j in range(m) for k in range(l))
-
+    # model.addConstrs((quicksum((a[j][i] * w[i, k]) for i in range(n)) <= c[j][k] * y[k] for j in range(m) for k in range(l)), "c1")
+    for k in range(l):
+        model.addConstrs((quicksum((a[j][i] * w[i, k]) for i in range(n)) <= c[j][k] * y[k] for j in range(m)), "c1" + str(k))
     # Optimize model
     model.optimize()
 
@@ -39,11 +40,12 @@ try:
         for j in range(l):
             if w[i, j].X > 0.5:
                 bin_for_item[i] = j
+                print(j, " ", end="")
 
     print("Bin assignment for each item: {}".format(bin_for_item))
 
-    for v in model.getVars():
-        print('%s %g' % (v.varName, v.x))
+    # for v in model.getVars():
+        # print('%s %g' % (v.varName, v.x))
 
     print('Obj: %g' % model.objVal)
 
@@ -52,3 +54,10 @@ except gp.GurobiError as e:
 
 except AttributeError:
     print('Encountered an attribute error')
+    print('Optimization was stopped with status %d' % model.status)
+    # do IIS, find infeasible constraints
+    model.computeIIS()
+    model.write("model.ilp")
+    # for c in model.getConstrs():
+    #     if c.IISConstr:
+    #         print('%s' % c.constrName)
