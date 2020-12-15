@@ -1,70 +1,51 @@
-#!/usr/bin/env python3.7
 
-# This example formulates and solves the following Multidimensional Bin Packing (BIP) model:
-# l nodes, n pods
-#  maximize
-#        sum(sum(i) for i in w)
-#  subject to
-#        x + 2 y + 3 z <= 4
-#        x +   y       >= 1
-#        x, y, z binary
-
+from gurobipy import quicksum
 import gurobipy as gp
 from gurobipy import GRB
+import random
 
 l = 5 # total 5 nodes available
 n = 20 # total 20 pods to be allocated 
 m = 2 # 2 kinds of resources
 
-w = [[0 for i in range(l)] for i in range(n)] # Initailize the placement decision matrix
-a = [[0 for i in range(m)] for i in range(n)] # Initailize the resource request of each Pod
-c = [[0 for i in range(m)] for i in range(l)] # Initailize the resource capacity of each node
+# w = [[0 for i in range(l)] for i in range(n)] # Initailize the placement decision matrix
+a = [[random.randint(1,5) for i in range(n)] for i in range(m)] # Initailize the resource request of each Pod
+c = [[10 for i in range(l)] for i in range(m)] # Initailize the resource capacity of each node
 
 try:
 
     # Create a new model
-    # m = gp.Model("mip1")
-    m = gp.Model("bip")
+    model = gp.Model()
 
     # Create variables
-    # x = m.addVar(vtype=GRB.BINARY, name="x")
-    for k in range (0, l):
-        for i in range (0, n):
-            var_name = "w[" + str(k) + "][" + str(i) + "]"
-            w[i][k] = m.addVar(vtype=GRB.BINARY, name=var_name)
+    w = model.addVars(n, l, vtype=GRB.BINARY, name='pod_matrix')
+    y = model.addVars(l, vtype=GRB.BINARY, name='node')
 
     # Set objective
-    # m.setObjective(x + y + 2 * z, GRB.MAXIMIZE)
-    m.setObjective(sum(sum(i) for i in w), GRB.MAXIMIZE)
+    model.setObjective(quicksum(quicksum(w[i, k] for i in range(n)) for k in range(l)), GRB.MAXIMIZE)
 
-    # Add constraint: resource constraints
-    # m.addConstr(x + 2 * y + 3 * z <= 4, "c0")
-    condition_idx = 0
-    for k in range(l):
-        for j in range(m):
-            resource_request = 0
-            for i in range(n):
-                resource_request = resource_request + a[i][j] * w[i][k]
-            m.addConstr(resource_request <= c[j][k] * y[k], "c1-" + str(condition_idx))
-            condition_idx = condition_idx + 1
+    # Add constraint: pack each Pod in exactly one node
+    model.addConstrs(quicksum(w[i, j] for j in range(l)) == 1 for i in range(n))
 
-    # Add constraint: Pod can only be placed to one node
-    condition_idx = 0
-    for i in range(n):
-        sum_w = 0
-        for k in range(l):
-            sum_w = sum_w + w[i][k]
-        m.addConstr(sum_w == 1, "c2-" + str(condition_idx))
-        condition_idx = condition_idx + 1
-            
+    # Add constraint: node capacity constraints
+    model.addConstrs(quicksum((a[j][i] * w[i, k]) for i in range(n)) <= c[j][k] * y[k] for j in range(m) for k in range(l))
 
     # Optimize model
-    m.optimize()
+    model.optimize()
 
-    for v in m.getVars():
+    # Results
+    bin_for_item = [-1 for i in range(n)]
+    for i in range(n):
+        for j in range(l):
+            if w[i, j].X > 0.5:
+                bin_for_item[i] = j
+
+    print("Bin assignment for each item: {}".format(bin_for_item))
+
+    for v in model.getVars():
         print('%s %g' % (v.varName, v.x))
 
-    print('Obj: %g' % m.objVal)
+    print('Obj: %g' % model.objVal)
 
 except gp.GurobiError as e:
     print('Error code ' + str(e.errno) + ': ' + str(e))
